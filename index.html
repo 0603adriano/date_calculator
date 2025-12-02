@@ -1,3 +1,625 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Teste</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top, #2b133d 0, #0b0b0f 40%, #050509 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            /* sobe o conteúdo, não força tudo no centro */
+            min-height: 100vh;
+            /* permite rolar se o conteúdo ficar maior */
+            padding: 32px 12px 40px;
+            /* respiro em cima e embaixo */
+            margin: 0;
+            animation: fadeInPage 0.6s ease-out;
+        }
+
+
+        /* cabeçalho romântico */
+        #titulo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        #titulo .linha-principal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        #titulo .nomes {
+            letter-spacing: 0.5px;
+        }
+
+        #titulo .subtitulo {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* coração pulsando */
+        #titulo .coracao {
+            color: #ff6b9d;
+            font-size: 26px;
+            animation: batidaCoracao 1.1s infinite ease-in-out;
+        }
+
+        /* estilo base para todos os cards */
+        .card-elevado {
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+            transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+        }
+
+        .card-elevado:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.9);
+        }
+
+
+        #contador {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .box {
+            background: linear-gradient(145deg, #181820, #1f1f2b);
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            width: 120px;
+            border: 1px solid rgba(255, 107, 157, 0.22);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+        }
+
+        .box:hover {
+            box-shadow: 0 14px 26px rgba(255, 107, 157, 0.35);
+            transform: translateY(-3px);
+            border-color: rgba(255, 107, 157, 0.55);
+        }
+
+
+        .box span.valor {
+            display: block;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ff6b9d;
+        }
+
+        .box span.label {
+            font-size: 13px;
+            opacity: 0.85;
+        }
+
+        #total {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .box:hover {
+            box-shadow: 0 0 18px rgba(255, 107, 157, 0.45);
+            transform: translateY(-2px);
+            transition: all 0.2s ease-out;
+        }
+
+        #marcos {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #marcos h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .marco-box {
+            background: rgba(15, 15, 20, 0.9);
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 6px auto;
+            max-width: 320px;
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6);
+            transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+        }
+
+        .marco-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.85);
+            border-color: rgba(255, 107, 157, 0.6);
+        }
+
+
+        .marco-titulo {
+            display: block;
+            font-size: 13px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .marco-valor {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff6b9d;
+        }
+
+        /* animação suave nos números quando mudam */
+        .pulse-numero {
+            animation: pulseNumero 0.35s ease-out;
+            display: inline-block;
+            /* pra animação de transform funcionar bonitinho */
+        }
+
+        /* painel com foto + música */
+        #painel-extra {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* card da foto */
+        .card-foto {
+            background: rgba(15, 15, 22, 0.95);
+            border-radius: 16px;
+            padding: 16px;
+            width: 260px;
+            border: 1px solid rgba(255, 107, 157, 0.35);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+            transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+            flex-shrink: 0;
+        }
+
+        .card-foto:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 26px rgba(0, 0, 0, 0.95);
+            border-color: rgba(255, 107, 157, 0.7);
+        }
+
+
+        .foto-casal {
+            width: 100%;
+            height: 90%;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("https://lh3.googleusercontent.com/pw/AP1GczNMh4_9ii_zsJ91c92U912vcN2o9wlmYYYFl-mwPScUXkpMevnTu_yiRBq4ue3sz16RfGHG67cjDzX-vHMgCQV7wWmsytmXgoXEa9F7lHiOQtbiMKEhUIWg5zwHPWgbNtSrsAj8viqNqvUc4w3LgYUnjVa6TP0amnz0cEMozZC1uT26f6jDdyOrU-LA55Desl6ISCG7TNTH78I7K_x5nc8hNl2WJ6aDjsL965u-eFTpLuO1ZXLIAySDf_5GCl1MW3ZQhj_O_z-YUWdWH7cYOUCftjucWUkRPiBHoFEINrIFpc8qH30DbByJheq0REs0RSRp5-lP_ULxfjH_JUiNR7GNvz3Z0FTlacidyTVw3zBIQAbEBfVM_gqexlTrC7NX2GE8-9GrtFcyv5BNCf7S55Dv_EWe8Vyp6b-Jp4m5x-h1B7C26IigP2jB0RaI8jbEZdE9K1eqoEUVBsPCzxERuYZKY-5FujVLtymkXkvIpMWS3pefuLDR1Tr8vtCmaPOurxUE2Mjzo1W3-JzjH7MFLzuk2LDxyNvhty1je0pU1FnUmfYhyGIKzvO-91oH6Cwga90sW4jKLzLmkOt9AH-td9Jxt3aVPwaI1de3cgdXh6QK4QaD-eM_v1ZifbsZJtAJ-jnDXdzentv_EPPbxMynDA5FWtrD87oyoFTZfMuOR70HMZUKpxa2aJkPzcMZYSlL9T7J8AY7AqHXgT3-TQauTP_-p4DDdpwlfe392GZ4eccnNtRXjBO6j9CqW_2qJ1GUq5PUmiwuT_bun_KZpw4lQABgc-33ciNh4kDHhRHnh0c6jVATCt7JfXQHDbKDmhJtFq7nmEXOBcslJj0s4xP63H6e6IWawtaMsrsdE1H0e-1CHOkhJwUEZrxUMNPzkf8wHqDIRPv41FSJt0zQlvGO0YRbNJeeL2PtnapM7aqWtcO_bZG-ypdF1maHjqWaEocgkwMM2auRWxoJ=w464-h618-no?authuser=0");
+            background-color: #333;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .foto-casal {
+                min-height: 300px !important;
+                height: 300px !important;
+                display: block;
+            }
+
+            #painel-extra {
+                align-items: center;
+            }
+        }
+
+
+        .legenda-foto {
+            font-size: 13px;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        /* card da música */
+        .card-musica {
+            background: rgba(15, 15, 22, 0.95);
+            border-radius: 16px;
+            padding: 16px 18px;
+            width: 360px;
+            border: 1px solid rgba(123, 148, 255, 0.4);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+            transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+        }
+
+        .card-musica:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 26px rgba(0, 0, 0, 0.95);
+            border-color: rgba(123, 148, 255, 0.75);
+        }
+
+
+        .card-musica iframe {
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .musica-titulo {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .musica-texto {
+            font-size: 13px;
+            opacity: 0.85;
+            margin-bottom: 12px;
+        }
+
+        .musica-botao {
+            display: inline-block;
+            margin-top: 10px;
+            text-align: center;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff6b9d, #7b94ff);
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+        }
+
+        .musica-botao:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);
+        }
+
+        .video-wrapper {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .video-wrapper iframe {
+            display: block;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 960px;
+            /* limita a largura em telas grandes */
+        }
+
+        /* ajustes específicos pra telas pequenas (celular) */
+        @media (max-width: 600px) {
+            body {
+                padding: 24px 10px 32px;
+            }
+
+            #contador {
+                gap: 12px;
+            }
+
+            .box {
+                width: 100px;
+                padding: 16px;
+            }
+
+            #painel-extra {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .card-foto,
+            .card-musica {
+                width: 100%;
+                max-width: 360px;
+            }
+        }
+
+
+        @keyframes batidaCoracao {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.25);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+
+            60% {
+                transform: scale(1.18);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseNumero {
+            0% {
+                transform: translateY(6px);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(-2px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page_container">
+
+        <div id="titulo">
+            <div class="linha-principal">
+                <span class="coracao">❤</span>
+                <span class="nomes">Adriano &amp; Letícia</span>
+            </div>
+            <div class="subtitulo">contando cada segundo juntos</div>
+        </div>
+
+        <div id="contador">
+            <div class="box">
+                <span id="anos" class="valor">0</span>
+                <span class="label">anos</span>
+            </div>
+            <div class="box">
+                <span id="meses" class="valor">0</span>
+                <span class="label">meses</span>
+            </div>
+            <div class="box">
+                <span id="dias" class="valor">0</span>
+                <span class="label">dias</span>
+            </div>
+            <div class="box">
+                <span id="horas" class="valor">0</span>
+                <span class="label">horas</span>
+            </div>
+            <div class="box">
+                <span id="minutos" class="valor">0</span>
+                <span class="label">minutos</span>
+            </div>
+            <div class="box">
+                <span id="segundos" class="valor">0</span>
+                <span class="label">segundos</span>
+            </div>
+        </div>
+
+        <div id="total" style="margin-top: 30px; text-align: center; font-size: 18px; opacity: 0.9;"></div>
+
+        <div id="marcos">
+            <h2>Próximos marcos</h2>
+
+            <div class="marco-box">
+                <span class="marco-titulo">Próximo mêsversário</span>
+                <span class="marco-valor" id="proxMesversario">--</span>
+            </div>
+
+            <div class="marco-box">
+                <span class="marco-titulo">Próximo aniversário de namoro</span>
+                <span class="marco-valor" id="proxAniversario">--</span>
+            </div>
+        </div>
+
+        <div id="painel-extra">
+            <div class="card-foto">
+                <div class="foto-casal"></div>
+                <div class="legenda-foto">
+                    "Cada dia ao seu lado é o meu favorito." 💕
+                </div>
+            </div>
+
+            <div class="card-musica">
+                <div class="musica-titulo">Trilha sonora do nosso amor 🎵</div>
+
+                <div class="musica-texto">
+                    Nossa música especial pra ouvir juntinhos:
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                        src="https://open.spotify.com/embed/track/37CkPWc8sgdSd6LkxSsSrT?utm_source=generator&theme=0"
+                        width="100%" height="352" frameBorder="0"
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy">
+                    </iframe>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        const inicioNamoro = new Date(2023, 3, 7) // abril = codigo 3
+
+        const UM_DIA_MS = 1000 * 60 * 60 * 24;
+
+        function atualizarNumeroComAnimacao(id, valorFormatado) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            const antigo = el.innerText;
+            const novo = String(valorFormatado);
+
+            // se não mudou, não precisa animar
+            if (antigo === novo) return;
+
+            el.innerText = novo;
+
+            // truque pra resetar a animação
+            el.classList.remove('pulse-numero');
+            void el.offsetWidth; // força reflow
+            el.classList.add('pulse-numero');
+        }
+
+
+        function atualizarContador() {
+            const agora = new Date();
+
+            let anos = agora.getFullYear() - inicioNamoro.getFullYear();
+            let meses = agora.getMonth() - inicioNamoro.getMonth();
+            let diaDiff = agora.getDate() - inicioNamoro.getDate();
+
+            if (diaDiff < 0) {
+                meses -= 1;
+
+                const anoTmp = agora.getFullYear();
+                const mesTmp = agora.getMonth();
+                const ultimoDiaMesAnterior = new Date(anoTmp, mesTmp, 0).getDate();
+
+                diaDiff += ultimoDiaMesAnterior;
+            }
+
+            if (meses < 0) {
+                anos -= 1;
+                meses += 12;
+            }
+
+            const ancora = new Date(
+                inicioNamoro.getFullYear() + anos,
+                inicioNamoro.getMonth() + meses,
+                inicioNamoro.getDate()
+            );
+
+            let diffMs = agora - ancora;
+            let totalSegundos = Math.floor(diffMs / 1000);
+
+            const dias = Math.floor(totalSegundos / (24 * 60 * 60));
+            totalSegundos %= 24 * 60 * 60;
+
+            const horas = Math.floor(totalSegundos / 3600);
+            totalSegundos %= 3600;
+
+            const minutos = Math.floor(totalSegundos / 60);
+            const segundos = totalSegundos % 60;
+
+            atualizarNumeroComAnimacao("anos", anos);
+            atualizarNumeroComAnimacao("meses", meses);
+            atualizarNumeroComAnimacao("dias", dias);
+            atualizarNumeroComAnimacao("horas", String(horas).padStart(2, "0"));
+            atualizarNumeroComAnimacao("minutos", String(minutos).padStart(2, "0"));
+            atualizarNumeroComAnimacao("segundos", String(segundos).padStart(2, "0"));
+
+            const diffTotalMs = agora - inicioNamoro;
+            const totalDias = Math.floor(diffTotalMs / (1000 * 60 * 60 * 24));
+
+            document.getElementById("total").innerText =
+                `Estamos juntos há ${totalDias} dias no total ❤️`;
+
+            // ----------------- PRÓXIMOS MARCOS -----------------
+
+            // zera a hora pra evitar erro por causa de hora/minuto/segundo
+            const hojeZero = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+
+            // --- Próximo mêsversário ---
+            let proximoMesversario = new Date(
+                hojeZero.getFullYear(),
+                hojeZero.getMonth(),
+                inicioNamoro.getDate()
+            );
+
+            // se a "cópia" deste mês já passou, pula pro mês seguinte
+            if (proximoMesversario < hojeZero) {
+                proximoMesversario = new Date(
+                    hojeZero.getFullYear(),
+                    hojeZero.getMonth() + 1,
+                    inicioNamoro.getDate()
+                );
+            }
+
+            const diffDiasMesversario = Math.round((proximoMesversario - hojeZero) / UM_DIA_MS);
+
+            let textoMesversario;
+            if (diffDiasMesversario === 0) {
+                textoMesversario = `É hoje! 🎉`;
+            } else if (diffDiasMesversario === 1) {
+                textoMesversario = `Falta 1 dia (${proximoMesversario.toLocaleDateString("pt-BR")})`;
+            } else {
+                textoMesversario = `Faltam ${diffDiasMesversario} dias (${proximoMesversario.toLocaleDateString("pt-BR")})`;
+            }
+
+            document.getElementById("proxMesversario").innerText = textoMesversario;
+
+
+            // --- Próximo aniversário de namoro (07/04) ---
+            let proximoAniversario = new Date(
+                hojeZero.getFullYear(),
+                inicioNamoro.getMonth(),
+                inicioNamoro.getDate()
+            );
+
+            // se o aniversário deste ano já passou, vai pro ano que vem
+            if (proximoAniversario < hojeZero) {
+                proximoAniversario = new Date(
+                    hojeZero.getFullYear() + 1,
+                    inicioNamoro.getMonth(),
+                    inicioNamoro.getDate()
+                );
+            }
+
+            const diffDiasAniversario = Math.round((proximoAniversario - hojeZero) / UM_DIA_MS);
+
+            let textoAniversario;
+            if (diffDiasAniversario === 0) {
+                textoAniversario = `É hoje! 🎂 Aniversário de namoro!`;
+            } else if (diffDiasAniversario === 1) {
+                textoAniversario = `Falta 1 dia (${proximoAniversario.toLocaleDateString("pt-BR")})`;
+            } else {
+                textoAniversario = `Faltam ${diffDiasAniversario} dias (${proximoAniversario.toLocaleDateString("pt-BR")})`;
+            }
+
+            document.getElementById("proxAniversario").innerText = textoAniversario;
+
+
+        }
+
+        atualizarContador();
+        setInterval(atualizarContador, 1000);
+    </script>
+</body>
+
+=======
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -603,4 +1225,5 @@
     </script>
 </body>
 
+>>>>>>> 3f7f61a4664c7eb5972e59fb6f6b13d66ba354d1
 </html>
